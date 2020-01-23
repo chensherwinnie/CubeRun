@@ -14,7 +14,7 @@ public class PlayerControl : MonoBehaviour{
     private float MaximumSideSpeed = 15f;
     private float ForwardForce = 70f;
     private float SideForce = 50f;
-    private float JumpForce = 8f;
+    private float JumpForce = 1000f;
 
     private bool isOnGround = false;
     public char direction = 'g';
@@ -42,14 +42,13 @@ public class PlayerControl : MonoBehaviour{
       MoveRight = Input.GetKey(KeyCode.D);
       MoveForward = Input.GetKey(KeyCode.W);
       MoveBack = Input.GetKey(KeyCode.S);
-
-      SideSpeed = SideForce*Time.deltaTime;
-      ForwardSpeed = ForwardForce*Time.deltaTime;
-      JumpSpeed = JumpForce;
-      CurrentSpeed = player.velocity;
     }
 
     void FixedUpdate(){
+      SideSpeed = SideForce*Time.deltaTime;
+      ForwardSpeed = ForwardForce*Time.deltaTime;
+      JumpSpeed = JumpForce*Time.deltaTime;
+      CurrentSpeed = player.velocity;
       PlayerMove();
     }
 
@@ -162,25 +161,22 @@ public class PlayerControl : MonoBehaviour{
     }
 
     void OnCollisionEnter(Collision collision){
+      if(collision.collider.tag == "g" || collision.collider.tag == "r" || collision.collider.tag == "l" || collision.collider.tag == "c"){
+        isOnGround = true;
+        direction = collision.collider.tag[0];
+      }
+
       if(collision.collider.tag == "g"){
         Physics.gravity = new Vector3(0, -15f, 0);
-        direction = 'g';
-        isOnGround = true;
       }
       else if(collision.collider.tag == "r"){
         Physics.gravity = new Vector3(15f, 0, 0);
-        direction = 'r';
-        isOnGround = true;
       }
       else if(collision.collider.tag == "l"){
         Physics.gravity = new Vector3(-15f, 0, 0);
-        direction = 'l';
-        isOnGround = true;
       }
       else if(collision.collider.tag == "c"){
         Physics.gravity = new Vector3(0, 15f, 0);
-        direction = 'c';
-        isOnGround = true;
       }
     }
 
