@@ -54,7 +54,10 @@ public class PlayerControl : MonoBehaviour{
     }
 
     bool CheckSpeedLimit(float speed, float limit){
-      return Math.Abs(speed) < limit;
+      if(speed < 0)
+        return speed > -1 * limit;
+      else
+        return speed < limit;
     }
 
     void PlayerMove(){
@@ -65,7 +68,6 @@ public class PlayerControl : MonoBehaviour{
 
         if(MoveLeft){
           PlayerMoveLeftSide();
-          Debug.Log("A");
         }
         if(MoveRight){
           PlayerMoveRightSide();
@@ -84,16 +86,16 @@ public class PlayerControl : MonoBehaviour{
     void PlayerMoveJump(){
       switch (direction) {
         case 'g':
-          player.AddForce(0, JumpSpeed, 0, ForceMode.Impulse);
+          player.AddForce(0, JumpSpeed, 0, ForceMode.VelocityChange);
           break;
         case 'r':
-          player.AddForce(-1 * JumpSpeed, 0, 0, ForceMode.Impulse);
+          player.AddForce(-1 * JumpSpeed, 0, 0, ForceMode.VelocityChange);
           break;
         case 'l':
-          player.AddForce(JumpSpeed, 0, 0, ForceMode.Impulse);
+          player.AddForce(JumpSpeed, 0, 0, ForceMode.VelocityChange);
           break;
         case 'c':
-          player.AddForce(0, -1 * JumpSpeed, 0, ForceMode.Impulse);
+          player.AddForce(0, -1 * JumpSpeed, 0, ForceMode.VelocityChange);
           break;
         }
     }
@@ -101,16 +103,29 @@ public class PlayerControl : MonoBehaviour{
     void PlayerMoveRightSide(){
       switch (direction) {
         case 'g':
-          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed)) player.AddForce(SideSpeed, 0, 0, ForceMode.VelocityChange);
-          break;
-        case 'r':
-          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)) player.AddForce(0, SideSpeed, 0, ForceMode.VelocityChange);
-          break;
-        case 'l':
-          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)) player.AddForce(0, -1 * SideSpeed, 0, ForceMode.VelocityChange);
+          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed))
+          {
+            player.AddForce(SideSpeed, 0, 0, ForceMode.VelocityChange);
+            Debug.Log("D");
+          }
           break;
         case 'c':
-          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed)) player.AddForce(-1 * SideSpeed, 0, 0, ForceMode.VelocityChange);
+          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed)){
+            player.AddForce(-1 * SideSpeed, 0, 0, ForceMode.VelocityChange);
+            Debug.Log("D");
+          }
+          break;
+        case 'r':
+          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
+            player.AddForce(0, SideSpeed, 0, ForceMode.VelocityChange);
+            Debug.Log("D");
+          }
+          break;
+        case 'l':
+          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
+            player.AddForce(0, -1 * SideSpeed, 0, ForceMode.VelocityChange);
+            Debug.Log("D");
+          }
           break;
         }
     }
@@ -118,18 +133,31 @@ public class PlayerControl : MonoBehaviour{
     void PlayerMoveLeftSide(){
       switch (direction) {
         case 'g':
-          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed)) player.AddForce(-1 * SideSpeed, 0, 0, ForceMode.VelocityChange);
-          break;
-        case 'r':
-          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)) player.AddForce(0, -1 * SideSpeed, 0, ForceMode.VelocityChange);
-          break;
-        case 'l':
-          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)) player.AddForce(0, SideSpeed, 0, ForceMode.VelocityChange);
+          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed))
+          {
+            player.AddForce(-1 * SideSpeed, 0, 0, ForceMode.VelocityChange);
+            Debug.Log("A");
+          }
           break;
         case 'c':
-          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed)) player.AddForce(SideSpeed, 0, 0, ForceMode.VelocityChange);
+          if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed))
+          {
+            player.AddForce(SideSpeed, 0, 0, ForceMode.VelocityChange);
+            Debug.Log("A");
+          }
           break;
-
+        case 'r':
+          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
+            player.AddForce(0, -1 * SideSpeed, 0, ForceMode.VelocityChange);
+            Debug.Log("A");
+          }
+          break;
+        case 'l':
+          if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
+            player.AddForce(0, SideSpeed, 0, ForceMode.VelocityChange);
+            Debug.Log("A");
+          }
+          break;
       }
     }
 
