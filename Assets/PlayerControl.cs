@@ -14,7 +14,7 @@ public class PlayerControl : MonoBehaviour{
     private float MaximumSideSpeed = 15f;
     private float ForwardForce = 70f;
     private float SideForce = 50f;
-    private float JumpForce = 1000f;
+    private float JumpForce = 20f;
 
     private bool isOnGround = false;
     public char direction = 'g';
@@ -47,7 +47,7 @@ public class PlayerControl : MonoBehaviour{
     void FixedUpdate(){
       SideSpeed = SideForce*Time.deltaTime;
       ForwardSpeed = ForwardForce*Time.deltaTime;
-      JumpSpeed = JumpForce*Time.deltaTime;
+      JumpSpeed = JumpForce;
       CurrentSpeed = player.velocity;
       PlayerMove();
     }
@@ -62,7 +62,6 @@ public class PlayerControl : MonoBehaviour{
     void PlayerMove(){
         if(Jump){
           PlayerMoveJump();
-          Debug.Log("Space");
         }
 
         if(MoveLeft){
@@ -70,33 +69,32 @@ public class PlayerControl : MonoBehaviour{
         }
         if(MoveRight){
           PlayerMoveRightSide();
-          Debug.Log("D");
         }
         if(MoveForward && CheckSpeedLimit(CurrentSpeed.z, MaximumSpeed)){
           player.AddForce(0, 0, ForwardSpeed, ForceMode.VelocityChange);
-          Debug.Log("W");
         }
         if(MoveBack && CheckSpeedLimit(CurrentSpeed.z, MaximumSpeed)){
           player.AddForce(0, 0, -1 * ForwardSpeed, ForceMode.VelocityChange);
-          Debug.Log("S");
         }
     }
 
     void PlayerMoveJump(){
+      player.velocity = new Vector3(player.velocity.x, player.velocity.y, 0f);
       switch (direction) {
         case 'g':
-          player.AddForce(0, JumpSpeed, 0, ForceMode.VelocityChange);
+          player.AddForce(0, JumpSpeed, 0, ForceMode.Impulse);
           break;
         case 'r':
-          player.AddForce(-1 * JumpSpeed, 0, 0, ForceMode.VelocityChange);
+          player.AddForce(-1 * JumpSpeed, 0, 0, ForceMode.Impulse);
           break;
         case 'l':
-          player.AddForce(JumpSpeed, 0, 0, ForceMode.VelocityChange);
+          player.AddForce(JumpSpeed, 0, 0, ForceMode.Impulse);
           break;
         case 'c':
-          player.AddForce(0, -1 * JumpSpeed, 0, ForceMode.VelocityChange);
+          player.AddForce(0, -1 * JumpSpeed, 0, ForceMode.Impulse);
           break;
         }
+        Jump = false;
     }
 
     void PlayerMoveRightSide(){
@@ -105,25 +103,21 @@ public class PlayerControl : MonoBehaviour{
           if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed))
           {
             player.AddForce(SideSpeed, 0, 0, ForceMode.VelocityChange);
-            Debug.Log("D");
           }
           break;
         case 'c':
           if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed)){
             player.AddForce(-1 * SideSpeed, 0, 0, ForceMode.VelocityChange);
-            Debug.Log("D");
           }
           break;
         case 'r':
           if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
             player.AddForce(0, SideSpeed, 0, ForceMode.VelocityChange);
-            Debug.Log("D");
           }
           break;
         case 'l':
           if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
             player.AddForce(0, -1 * SideSpeed, 0, ForceMode.VelocityChange);
-            Debug.Log("D");
           }
           break;
         }
@@ -135,26 +129,22 @@ public class PlayerControl : MonoBehaviour{
           if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed))
           {
             player.AddForce(-1 * SideSpeed, 0, 0, ForceMode.VelocityChange);
-            Debug.Log("A");
           }
           break;
         case 'c':
           if(CheckSpeedLimit(CurrentSpeed.x, MaximumSideSpeed))
           {
             player.AddForce(SideSpeed, 0, 0, ForceMode.VelocityChange);
-            Debug.Log("A");
           }
           break;
         case 'r':
           if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
             player.AddForce(0, -1 * SideSpeed, 0, ForceMode.VelocityChange);
-            Debug.Log("A");
           }
           break;
         case 'l':
           if(CheckSpeedLimit(CurrentSpeed.y, MaximumSideSpeed)){
             player.AddForce(0, SideSpeed, 0, ForceMode.VelocityChange);
-            Debug.Log("A");
           }
           break;
       }
@@ -183,6 +173,12 @@ public class PlayerControl : MonoBehaviour{
     void OnCollisionExit(Collision collision){
       if(collision.collider.tag == "l" || collision.collider.tag == "g" || collision.collider.tag == "c" || collision.collider.tag == "r"){
         isOnGround = false;
+      }
+    }
+
+    void OnCollisionStay(Collision collision){
+      if(collision.collider.tag == "g" || collision.collider.tag == "r" || collision.collider.tag == "l" || collision.collider.tag == "c"){
+        isOnGround = true;
       }
     }
 }
