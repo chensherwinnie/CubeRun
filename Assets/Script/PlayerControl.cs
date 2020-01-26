@@ -10,14 +10,19 @@ public class PlayerControl : MonoBehaviour{
     /*
       private setting for the Forces
     */
-    private float MaximumSpeed = 30f;
-    private float MaximumSideSpeed = 15f;
-    private float ForwardForce = 70f;
-    private float SideForce = 50f;
-    private float JumpForce = 20f;
+    private float MaximumSpeed = 80f;
+    private float MaximumSideSpeed = 50f;
+    private float ForwardForce = 100f;
+    private float SideForce = 70f;
+    private float JumpForce = 40f;
 
+    /*
+     * Gravity Setting
+     */
     private bool isOnGround = false;
     public char direction = 'g';
+    private float GravityMultiplier = 2.5f;
+    private float GravityConstant = 10;
 
     private float SideSpeed;
     private float ForwardSpeed;
@@ -62,9 +67,10 @@ public class PlayerControl : MonoBehaviour{
     void PlayerMove(){
         if(Jump){
           PlayerMoveJump();
+          Jump = false;
         }
 
-        if(MoveLeft){
+        if (MoveLeft){
           PlayerMoveLeftSide();
         }
         if(MoveRight){
@@ -94,7 +100,6 @@ public class PlayerControl : MonoBehaviour{
           player.AddForce(0, -1 * JumpSpeed, 0, ForceMode.Impulse);
           break;
         }
-        Jump = false;
     }
 
     void PlayerMoveRightSide(){
@@ -151,22 +156,24 @@ public class PlayerControl : MonoBehaviour{
     }
 
     void OnCollisionEnter(Collision collision){
+        float GravityForce = GravityConstant * GravityMultiplier;
+
       if(collision.collider.tag == "g" || collision.collider.tag == "r" || collision.collider.tag == "l" || collision.collider.tag == "c"){
         isOnGround = true;
         direction = collision.collider.tag[0];
       }
 
       if(collision.collider.tag == "g"){
-        Physics.gravity = new Vector3(0, -15f, 0);
+        Physics.gravity = new Vector3(0, -1*GravityForce, 0);
       }
       else if(collision.collider.tag == "r"){
-        Physics.gravity = new Vector3(15f, 0, 0);
+        Physics.gravity = new Vector3(GravityForce, 0, 0);
       }
       else if(collision.collider.tag == "l"){
-        Physics.gravity = new Vector3(-15f, 0, 0);
+        Physics.gravity = new Vector3(-1*GravityForce, 0, 0);
       }
       else if(collision.collider.tag == "c"){
-        Physics.gravity = new Vector3(0, 15f, 0);
+        Physics.gravity = new Vector3(0, GravityForce, 0);
       }
     }
 
