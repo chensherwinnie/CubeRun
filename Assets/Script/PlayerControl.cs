@@ -22,7 +22,7 @@ public class PlayerControl : MonoBehaviour{
     private bool isOnGround = false;
     public char direction = 'g';
     private float GravityMultiplier = 2.5f;
-    private float GravityConstant = 10;
+    private float GravityConstant = 20;
 
     private float SideSpeed;
     private float ForwardSpeed;
@@ -34,6 +34,9 @@ public class PlayerControl : MonoBehaviour{
     private bool MoveRight;
     private bool MoveForward;
     private bool MoveBack;
+
+    private int AllowedJumpTimes = 1;
+    private Vector3 JumpMotion;
 
     void Start(){
       player = GetComponent<Rigidbody>();
@@ -50,23 +53,17 @@ public class PlayerControl : MonoBehaviour{
     }
 
     void FixedUpdate(){
-      SideSpeed = SideForce*Time.deltaTime;
-      ForwardSpeed = ForwardForce*Time.deltaTime;
-      JumpSpeed = JumpForce;
-      CurrentSpeed = player.velocity;
-      PlayerMove();
-    }
-
-    bool CheckSpeedLimit(float speed, float limit){
-      if(speed < 0)
-        return speed > -1 * limit;
-      else
-        return speed < limit;
+        SideSpeed = SideForce*Time.deltaTime;
+        ForwardSpeed = ForwardForce*Time.deltaTime;
+        JumpSpeed = JumpForce;
+        CurrentSpeed = player.velocity;
+        PlayerMove();
     }
 
     void PlayerMove(){
-        if(Jump){
+        if(Jump && AllowedJumpTimes > 0){
           PlayerMoveJump();
+          AllowedJumpTimes--;
           Jump = false;
         }
 
@@ -85,21 +82,33 @@ public class PlayerControl : MonoBehaviour{
     }
 
     void PlayerMoveJump(){
-      player.velocity = new Vector3(player.velocity.x, player.velocity.y, 0f);
-      switch (direction) {
-        case 'g':
-          player.AddForce(0, JumpSpeed, 0, ForceMode.Impulse);
-          break;
-        case 'r':
-          player.AddForce(-1 * JumpSpeed, 0, 0, ForceMode.Impulse);
-          break;
-        case 'l':
-          player.AddForce(JumpSpeed, 0, 0, ForceMode.Impulse);
-          break;
-        case 'c':
-          player.AddForce(0, -1 * JumpSpeed, 0, ForceMode.Impulse);
-          break;
+        player.velocity = new Vector3(player.velocity.x, player.velocity.y, 0f);
+        switch (direction)
+        {
+            case 'g':
+                JumpMotion = Vector3.up * JumpSpeed;
+                break;
+            case 'r':
+                JumpMotion = Vector3.left * JumpSpeed;
+                break;
+            case 'l':
+                JumpMotion = Vector3.right * JumpSpeed;
+                break;
+            case 'c':
+                JumpMotion = Vector3.down * JumpSpeed;
+                break;
+            default:
+                return;
         }
+        player.AddForce(JumpMotion, ForceMode.Impulse);
+    }
+
+    bool CheckSpeedLimit(float speed, float limit)
+    {
+        if (speed < 0)
+            return speed > -1 * limit;
+        else
+            return speed < limit;
     }
 
     void PlayerMoveRightSide(){
@@ -155,26 +164,35 @@ public class PlayerControl : MonoBehaviour{
       }
     }
 
+    void AdjustGravity()
+    {
+        float GravityForce = GravityConstant * (GravityMultiplier - 1);
+
+        if (direction == 'g')
+        {
+            Physics.gravity = new Vector3(0, -1 * GravityForce, 0);
+        }
+        else if (direction == 'r')
+        {
+            Physics.gravity = new Vector3(GravityForce, 0, 0);
+        }
+        else if (direction == 'l')
+        {
+            Physics.gravity = new Vector3(-1 * GravityForce, 0, 0);
+        }
+        else if (direction == 'c')
+        {
+            Physics.gravity = new Vector3(0, GravityForce, 0);
+        }
+    }
+
     void OnCollisionEnter(Collision collision){
-        float GravityForce = GravityConstant * GravityMultiplier;
-
-      if(collision.collider.tag == "g" || collision.collider.tag == "r" || collision.collider.tag == "l" || collision.collider.tag == "c"){
-        isOnGround = true;
-        direction = collision.collider.tag[0];
-      }
-
-      if(collision.collider.tag == "g"){
-        Physics.gravity = new Vector3(0, -1*GravityForce, 0);
-      }
-      else if(collision.collider.tag == "r"){
-        Physics.gravity = new Vector3(GravityForce, 0, 0);
-      }
-      else if(collision.collider.tag == "l"){
-        Physics.gravity = new Vector3(-1*GravityForce, 0, 0);
-      }
-      else if(collision.collider.tag == "c"){
-        Physics.gravity = new Vector3(0, GravityForce, 0);
-      }
+        if (collision.collider.tag[0] != 'n')
+        {
+            direction = collision.collider.tag[0];
+        }
+        AllowedJumpTimes = 1;
+        AdjustGravity();
     }
 
     void OnCollisionExit(Collision collision){
@@ -184,8 +202,6 @@ public class PlayerControl : MonoBehaviour{
     }
 
     void OnCollisionStay(Collision collision){
-      if(collision.collider.tag == "g" || collision.collider.tag == "r" || collision.collider.tag == "l" || collision.collider.tag == "c"){
-        isOnGround = true;
-      }
+       isOnGround = true;
     }
 }
