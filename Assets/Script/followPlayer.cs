@@ -8,7 +8,7 @@ public class followPlayer : MonoBehaviour{
     private Dictionary<char, Vector3> Offset = new Dictionary<char, Vector3>();
 
     private static float OffsetUp = 2f;
-    private static float OffsetBack = 8f;
+    private static float OffsetBack = 7f;
     private GameObject playerObj;
     private Rigidbody player;
     private char direction;
