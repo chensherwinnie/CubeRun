@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This class is created for the Obstacle objects
+ */
+
 public class ObstacleGravity : MonoBehaviour
 {
     private int ForceConstant = 16;
@@ -27,6 +31,7 @@ public class ObstacleGravity : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // When the obtacle is crashed with player, its gravity is disabled
         if(collision.collider.name == "Player")
         {
             ObjectType = 'z';
