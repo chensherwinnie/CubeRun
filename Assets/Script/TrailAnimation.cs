@@ -6,6 +6,7 @@ public class TrailAnimation : MonoBehaviour
 {
     Dictionary<char, Quaternion> Direction = new Dictionary<char, Quaternion>();
     private char CurrentDirection = 'g';
+
     // Start is called before the first frame update
     void Start()
     {

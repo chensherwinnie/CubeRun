@@ -5,7 +5,9 @@ using UnityEngine;
 public class TimeBody : MonoBehaviour
 {
     public bool isRewinding = false;
-    List<Vector3> PlayerPosition;
+    public bool PlayerIsDead = false;
+    private int RewindSpeed = 1;
+    List<Vector3> PlayerPosition;   
     GameObject player;
 
     void Start()
@@ -17,6 +19,7 @@ public class TimeBody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
             isRewinding = true;
@@ -25,10 +28,26 @@ public class TimeBody : MonoBehaviour
 		{
             isRewinding = false;
 		}
+
+
+        PlayerIsDead = transform.Find("DeathWall").GetComponent<DetectPlayerState>().PlayerIsDead;
     }
 
     private void FixedUpdate()
     {
+        if (PlayerIsDead)
+        {
+            isRewinding = true;
+            RewindSpeed = 3;
+            if(PlayerPosition.Count == 0)
+            {
+                PlayerIsDead = false;
+                GameObject.Find("DeathWall").GetComponent<DetectPlayerState>().PlayerRevive();
+                isRewinding = false;
+                RewindSpeed = 1;
+            }
+        }
+
         if (isRewinding)
         {
             Rewind();
@@ -43,11 +62,7 @@ public class TimeBody : MonoBehaviour
     {
         if(player.GetComponent<Rigidbody>().velocity != Vector3.zero)
         {
-            PlayerPosition.Insert(0, transform.position);
-            if (PlayerPosition.Count > 5000)
-            {
-                PlayerPosition.RemoveAt(PlayerPosition.Count - 1);
-            }
+            PlayerPosition.Insert(0, player.transform.position);
         }
     }
 
@@ -55,8 +70,9 @@ public class TimeBody : MonoBehaviour
     {
         if (PlayerPosition.Count != 0)
         {
-            transform.position = PlayerPosition[0];
-            PlayerPosition.RemoveAt(0);
+            player.transform.position = PlayerPosition[0];
+            for(int i = 0; i < RewindSpeed; i++)
+                PlayerPosition.RemoveAt(0);
         }
     }
 }
