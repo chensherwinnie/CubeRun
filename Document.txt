@@ -1,0 +1,30 @@
+Ground:
+	Background Color:
+		new Color(228 / 256f, 179 / 256f, 99 / 256f, 1)
+	Platform Color:
+		new Color(239/256f, 100 / 256f, 97 / 256f, 1)
+	Player Color:
+		new Color(204 / 256f, 164 / 256f, 59 / 256f, 1)
+Left:
+	Background Color:
+		new Color(37 / 256f, 89 / 256f, 87 / 256f, 1)
+	Platform Color:
+		new Color(67 / 256f, 124 / 256f, 144 / 256f, 1)
+	Player Color:
+		new Color(59 / 256f, 53 / 256f, 97 / 256f, 1)
+Right:
+	Background Color:
+		new Color(121 / 256f, 123 / 256f, 132 / 256f, 1)
+	Platform Color:
+		new Color(237 / 256f, 187 / 256f, 180 / 256f, 1)
+	Player Color:
+		new Color(7 / 256f, 79 / 256f, 87 / 256f, 1)
+Ceiling:
+	Background Color:
+		new Color(230 / 256f, 230 / 256f, 233 / 256f, 1)
+	Platform Color:
+		new Color(0, 0, 0, 1)
+	Player Color:
+		new Color(0, 0, 0, 1)
+
+Platform Color when

@@ -28,10 +28,5 @@ public class PlayerColor : MonoBehaviour
             CurrentDirection = Player.direction;
             PlayerMaterial.color = ColorDic[CurrentDirection];
         }
-
-        if (transform.CompareTag(CurrentDirection.ToString()))
-        {
-            PlayerMaterial.color = Color.white;
-        }
     }
 }

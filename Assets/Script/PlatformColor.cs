@@ -29,9 +29,10 @@ public class PlatformColor : MonoBehaviour
             GroundMaterial.color = ColorDic[CurrentDirection];
         }
 
-        if (transform.CompareTag(CurrentDirection.ToString()))
+        if (transform.CompareTag(Player.direction.ToString()))
         {
             GroundMaterial.color = Color.white;
-        }
+            return;
+        } // Minor optimization?
     }
 }

@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour{
      * Gravity Setting
      */
     private bool isOnGround = false;
-    public char direction = 'g';
+    public char direction;
     private float GravityMultiplier = 2.5f;
     private float GravityConstant = 20;
 
