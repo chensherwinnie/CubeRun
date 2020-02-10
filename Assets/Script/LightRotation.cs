@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This class is used by Directional Light
+ */
 public class LightRotation : MonoBehaviour
 {
     private GameObject playerObj;

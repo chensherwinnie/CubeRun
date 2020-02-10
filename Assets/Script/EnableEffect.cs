@@ -6,6 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 /*
  * Enable the special camera effect if isRewinding is true
+ * Used by PostProcessing Object in Camera
  * (Time Body Script exists in GameManager empty object)
  */
 public class EnableEffect : MonoBehaviour

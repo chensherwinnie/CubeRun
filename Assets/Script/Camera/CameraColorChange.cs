@@ -14,11 +14,7 @@ public class CameraColorChange : MonoBehaviour
         CurrentCamera = GetComponent<Camera>();
         CurrentDirection = 'g';
         Player = GameObject.Find("Player").GetComponent<PlayerControl>();
-        ColorDic = new Dictionary<char, Color>();
-        ColorDic.Add('g', new Color(228 / 256f, 179 / 256f, 99 / 256f, 1));
-        ColorDic.Add('l', new Color(37 / 256f, 89 / 256f, 87 / 256f, 1));
-        ColorDic.Add('r', new Color(121 / 256f, 123 / 256f, 132 / 256f, 1));
-        ColorDic.Add('c', new Color(230 / 256f, 230 / 256f, 233 / 256f, 1));
+        ColorDic = ColorHolder.BackgroundColor;
     }
 
     private void Update()
