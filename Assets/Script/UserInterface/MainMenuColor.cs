@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class MainMenuColor : MonoBehaviour
 {
-    private Dictionary<char, Color> TextColor;
+    private Dictionary<char, Color> CubeColor;
     private Dictionary<char, Color> BackgroundColor;
-    private Dictionary<char, Color> ButtonColor;
+    private Dictionary<char, Color> PlatformColor;
     
     void Start()
     {
-        TextColor = ColorHolder.PlayerColor;
+        CubeColor = new Dictionary<char, Color>
+        {
+            { ''},
+            { },
+            { },
+            { },
+        };
         BackgroundColor = ColorHolder.BackgroundColor;
-        ButtonColor = ColorHolder.PlatformColor;
+        PlatformColor = ColorHolder.PlatformColor;
+
+        char[] AllColor = { 'g', 'l', 'r', 'c' };
+        char ColorChar = AllColor[Random.Range(0, AllColor.Length)];
+        Debug.Log(ColorChar);
+        
+        GameObject.Find("Camera").GetComponent<Camera>().backgroundColor = BackgroundColor[ColorChar];
+        GameObject.Find("Cube").GetComponent<Renderer>().material.color = PlatformColor[ColorChar];
     }
 }

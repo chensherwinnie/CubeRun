@@ -30,6 +30,6 @@ public class PlatformColor : MonoBehaviour
         {
             GroundMaterial.color = Color.white;
             return;
-        } // Minor optimization?
+        } // Minor optimization here?
     }
 }
