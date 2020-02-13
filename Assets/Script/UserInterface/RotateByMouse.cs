@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class RotateByMouse : MonoBehaviour
 {
-
-
-
     /*
      * Important Credit: the following code is exactly copied from the YouTube Tutorial "Unity Tutorials: Look at Mouse on Screen"
      * Made by Ather Omar

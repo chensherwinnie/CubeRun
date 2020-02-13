@@ -1267,7 +1267,6 @@ GameObject:
   - component: {fileID: 521560785}
   - component: {fileID: 521560784}
   - component: {fileID: 521560789}
-  - component: {fileID: 521560790}
   - component: {fileID: 521560791}
   m_Layer: 0
   m_Name: Player
@@ -1379,20 +1378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 103
---- !u!114 &521560790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521560783}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 130b1ccef5a2b4416ac2052f1eb7ad85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRewinding: 0
-  PlayerIsDead: 0
 --- !u!114 &521560791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,7 +1387,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 521560783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16eea93794d584d2789a0e0a2dba5490, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f93cae9f708c43e8aa518e5fef04f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMaterial: {fileID: 0}
@@ -3212,10 +3197,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1046487637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 475309ed56a8a4b4dbd874650c86070c, type: 3}
+  m_Script: {fileID: 11500000, guid: 91e013aa6064c4ec0ac63ca4c4d2690c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  YRotation: 45
+  YRotation: 0
 --- !u!95 &1046487640
 Animator:
   serializedVersion: 3
@@ -5650,10 +5635,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2095932777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 475309ed56a8a4b4dbd874650c86070c, type: 3}
+  m_Script: {fileID: 11500000, guid: 91e013aa6064c4ec0ac63ca4c4d2690c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  YRotation: 0
+  YRotation: 45
 --- !u!1 &2110792165
 GameObject:
   m_ObjectHideFlags: 0

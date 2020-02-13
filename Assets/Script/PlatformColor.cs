@@ -15,10 +15,7 @@ public class PlatformColor : MonoBehaviour
         CurrentDirection = 'g';
         Player = GameObject.Find("Player").GetComponent<PlayerControl>();
         ColorDic = new Dictionary<char, Color>();
-        ColorDic.Add('g', new Color(239/256f, 100 / 256f, 97 / 256f, 1));
-        ColorDic.Add('l', new Color(67 / 256f, 124 / 256f, 144 / 256f, 1));
-        ColorDic.Add('r', new Color(237 / 256f, 187 / 256f, 180 / 256f, 1));
-        ColorDic.Add('c', new Color(0, 0, 0, 1));
+        ColorDic = ColorHolder.PlatformColor;
     }
 
     private void Update()
@@ -33,6 +30,6 @@ public class PlatformColor : MonoBehaviour
         {
             GroundMaterial.color = Color.white;
             return;
-        } // Minor optimization?
+        } // Minor optimization here?
     }
 }

@@ -14,11 +14,7 @@ public class PlayerColor : MonoBehaviour
         PlayerMaterial = GetComponent<Renderer>().material;
         CurrentDirection = 'g';
         Player = GameObject.Find("Player").GetComponent<PlayerControl>();
-        ColorDic = new Dictionary<char, Color>();
-        ColorDic.Add('g', new Color(59 / 256f, 53 / 256f, 97 / 256f, 1));
-        ColorDic.Add('l', new Color(204 / 256f, 164 / 256f, 59 / 256f, 1));
-        ColorDic.Add('r', new Color(7 / 256f, 79 / 256f, 87 / 256f, 1));
-        ColorDic.Add('c', new Color(0, 0, 0, 1));
+        ColorDic = ColorHolder.PlayerColor;
     }
 
     private void Update()
