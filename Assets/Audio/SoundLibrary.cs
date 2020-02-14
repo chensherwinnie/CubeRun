@@ -5,9 +5,9 @@ using UnityEngine;
 public class SoundLibrary : MonoBehaviour
 {
 
-    public static float masterVolume = 1f;
+    public static float masterVolume = 0.5f;
     public static float musicVolume = 0.5f;
-    public static float soundVolume = 1f;
+    public static float soundVolume = 0.5f;
 
     public static SoundLibrary Instance { get; private set; }
     public AudioClip ButtionClickSound;
