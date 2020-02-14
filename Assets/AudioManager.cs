@@ -6,14 +6,14 @@ using UnityEngine;
  * This script has a execution order of 100
  * which is earlier than the execution order of MusicManager.cs (200)
  */
-public  class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
-    float masterVolume;
-    float musicVolume;
-    float soundVolume;
 
     public AudioSource[] musicSources;
     int activeMusicIndex = 1;
+
+    private AudioSource UIsource;
+
 
     public static AudioManager instance;
 
@@ -28,14 +28,39 @@ public  class AudioManager : MonoBehaviour
             musicSources[i] = newMusicSource.AddComponent<AudioSource>();
             newMusicSource.transform.parent = transform;
         }
-        Debug.Log("Start is run");
+
+        UIsource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void PlayMusic(AudioClip clip, float fadeDuration = 1)
+    public void PlayMusic(AudioClip clip, float fadeDuration = 2)
     {
-        Debug.Log("Play music");
         activeMusicIndex = 1 - activeMusicIndex;
         musicSources[activeMusicIndex].clip = clip;
         musicSources[activeMusicIndex].Play();
+        StartCoroutine(MusicFadeIn(fadeDuration));
+    }
+
+    IEnumerator MusicFadeIn(float second)
+    {
+        float percent = 0;
+
+        while(percent < 1)
+        {
+            percent += Time.deltaTime / second * 1f;
+            musicSources[activeMusicIndex].volume = Mathf.Lerp(0, SoundLibrary.musicVolume * SoundLibrary.masterVolume, percent);
+            musicSources[1 - activeMusicIndex].volume = Mathf.Lerp(SoundLibrary.musicVolume * SoundLibrary.masterVolume, 0, percent);
+            yield return null;
+        }
+    }
+
+    public void PlaySound()
+    {
+        //AudioSource.
+    }
+
+    public void PlayUISound(AudioClip clip)
+    {
+        UIsource.volume = SoundLibrary.soundVolume * SoundLibrary.masterVolume;
+        UIsource.PlayOneShot(clip);
     }
 }
