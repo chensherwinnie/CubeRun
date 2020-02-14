@@ -19,11 +19,8 @@ public class MainMenuColor : MonoBehaviour
 
         char[] AllColor = { 'g', 'l', 'r', 'c' };
         char ColorChar = AllColor[Random.Range(0, AllColor.Length)];
-        Debug.Log(ColorChar);
         
-        GameObject.Find("Camera").GetComponent<Camera>().backgroundColor = BackgroundColor['l'];
-        GameObject.Find("Cube").GetComponent<Renderer>().material.color = CubeColor['l'];
-
-
+        GameObject.Find("Camera").GetComponent<Camera>().backgroundColor = BackgroundColor[ColorChar];
+        GameObject.Find("Cube").GetComponent<Renderer>().material.color = CubeColor[ColorChar];
     }
 }
