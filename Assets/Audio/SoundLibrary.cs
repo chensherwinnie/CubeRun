@@ -35,6 +35,11 @@ public class SoundLibrary : MonoBehaviour
         masterVolume = PlayerPrefs.GetFloat("master Vol", 0.5f);
         musicVolume = PlayerPrefs.GetFloat("music Vol", 0.5f);
         soundVolume = PlayerPrefs.GetFloat("sound Vol", 0.5f);
+
+        Debug.Log(masterVolume);
+        Debug.Log(musicVolume);
+        Debug.Log(soundVolume);
+
     }
 
     public void SetVolume(float newVolume, AudioChannel channel)
@@ -56,8 +61,8 @@ public class SoundLibrary : MonoBehaviour
         AudioManager.musicSources[1].volume = masterVolume * musicVolume;
 
         PlayerPrefs.SetFloat("master Vol", masterVolume);
-        PlayerPrefs.SetFloat("music Vol", masterVolume);
-        PlayerPrefs.SetFloat("sound Vol", masterVolume);
+        PlayerPrefs.SetFloat("music Vol", musicVolume);
+        PlayerPrefs.SetFloat("sound Vol", soundVolume);
         PlayerPrefs.Save();
     }
 }
